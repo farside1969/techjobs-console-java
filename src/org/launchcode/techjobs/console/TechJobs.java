@@ -71,7 +71,7 @@ public class TechJobs {
     }
 
     // ﻿Returns the key of the selected item from the choices Dictionary
-    private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
+    private static <exist> String getUserSelection(String menuHeader, HashMap<String, String> choices) {
 
         Integer choiceIdx;
         Boolean validChoice = false;
@@ -94,15 +94,21 @@ public class TechJobs {
                 System.out.println("" + j + " - " + choices.get(choiceKeys[j]));
             }
 
-            choiceIdx = in.nextInt();
-            in.nextLine();
+            //conditional if a non integer is input when integer is expected
+                if (in.hasNextInt()) {
+                    choiceIdx = in.nextInt();
+                } else {
+            //gives a bad integer to trigger reselect if a non integer is input instead of crash
+                    choiceIdx = -1;
+                }
+                in.nextLine();
 
-            // Validate user's input
-            if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
-                System.out.println("Invalid choice. Try again.");
-            } else {
-                validChoice = true;
-            }
+                // Validate user's input
+                if (choiceIdx < 0 || choiceIdx >= choiceKeys.length) {
+                    System.out.println("Invalid choice. Try again.");
+                } else {
+                    validChoice = true;
+                }
 
         } while (!validChoice);
 
@@ -114,16 +120,17 @@ public class TechJobs {
 
     //conditional if jobs are more than zero
         if (someJobs.size() > 0) {
-
+    //key : value relationship
             for (HashMap<String, String> job : someJobs) {
     //upper divider marker
                 System.out.println("*****");
+    //print format (title : result) loop
                 for (String key : job.keySet()) {
                     System.out.println(key + ": " + job.get(key));
-    //lower divider marker
-                }System.out.println("*****\n");}
-    //print number of results returned
-            System.out.println(someJobs.size()+" results");
+    //lower divider marker with extra line space
+                } System.out.println("*****\n");}
+    //print number of results returned only once
+            System.out.println(someJobs.size()+" results found");
 
         } else {
             System.out.println("No jobs found");
