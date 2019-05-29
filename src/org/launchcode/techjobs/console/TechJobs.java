@@ -61,7 +61,8 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+        //to search ALL using the searchTerm for a specific result
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
@@ -113,16 +114,17 @@ public class TechJobs {
 
     //conditional if jobs are more than zero
         if (someJobs.size() > 0) {
-    //
+
             for (HashMap<String, String> job : someJobs) {
     //upper divider marker
                 System.out.println("*****");
                 for (String key : job.keySet()) {
                     System.out.println(key + ": " + job.get(key));
-                }
     //lower divider marker
-                System.out.println("*****\n");
-            }
+                }System.out.println("*****\n");}
+    //print number of results returned
+            System.out.println(someJobs.size()+" results");
+
         } else {
             System.out.println("No jobs found");
         }
